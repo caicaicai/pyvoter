@@ -52,8 +52,8 @@ class Spider():
         print("蜘蛛结束...")
         print("累计爬取页面数量: " + str(len(self.visited)))
         print("累计获取代理服务器数量: " + str(len(self.ips)))
-        time.sleep(3)
         self.saveIP()
+        time.sleep(3)
         return self
 
     def fetch(self, mutex, param):

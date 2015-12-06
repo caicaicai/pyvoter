@@ -7,7 +7,7 @@ def getConfig():
 	config = {}
 
 	#debug 模式
-	config['debug'] = 0
+	config['debug'] = 1
 	
 	#投票配置
 	config['Voter'] = {}
@@ -26,7 +26,7 @@ def getConfig():
 	#多线程配置
 	#投票的线程数量
 	config['MultThread'] = {}
-	config['MultThread']['threadNum'] = 100
+	config['MultThread']['threadNum'] = 300
 
 
 	#蜘蛛配置
