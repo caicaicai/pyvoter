@@ -78,18 +78,25 @@ class Spider():
                         print("当前获取到的IP数量: " + str(len(self.ips)))
                         mutex.release()
 
-                    urls_ = re.findall(r"(?<=href=\").+?(?=\")|(?<=href=\').+?(?=\')", html)
-                    for r in urls_:
-                        if re.match(r".*(;|xml|css|js)", r):
-                            continue
+                    urls_1 = self.find_urls(html)
+                    urls_2= []
+                    for r in urls_1:
                         if re.match(r"^[^http]", r):
                             r = urlBase + r
-                        mutex.acquire()
-                        self.searched_url.append(r)
-                        mutex.release()
+                        urls_2.append(r)
+                    mutex.acquire()
+                    self.searched_url += urls_2
+                    mutex.release()
             except Exception as e:
                 if(self.config['debug']):
                     print(e)
+    def find_urls(self, html):
+        url_list = []
+        for tag in re.findall('< *a +href[^>]+', html): # find the a tags
+            m = re.search('href *= *[\'"]([^\'"]+)', tag) # find the href
+            if m:
+                url_list.append(m.group(1)) # add the sub match
+        return url_list
 
 
     def saveIP(self):
