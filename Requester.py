@@ -27,9 +27,9 @@ def fetch(url,proxy = None):
         opener.add_handler(urllib.request.ProxyHandler(proxy))
     opener.addheaders = [("User-agent",agent),("Accept","*/*"),('Referer','http://www.google.com')]
     resp = opener.open(url, timeout = 3)
+    encodeType = resp.headers.get_param('charset')
     respByteObj = resp.read()
-    encodeType = chardet.detect(respByteObj)['encoding']
     if(encodeType is None):
-    	return None
+    	encodeType = 'utf8'
     html = respByteObj.decode(encodeType)
     return html
